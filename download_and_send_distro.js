@@ -5,7 +5,7 @@ const sender = require('./send_distro');
 (async function () {
     try {
         if(process.argv.length < 5){
-            log.warning('the min required params was not provided, expecting amount, startDate, then endDate')
+            log.warn('the min required params was not provided, expecting amount, startDate, then endDate')
             return;
         }
 

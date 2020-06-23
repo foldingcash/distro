@@ -11,9 +11,9 @@ Update configuration/wallet with your wallet and token information
 
 Run ```npm i```
 
-Run ```npm run distro -- 100000 01-01-2020 06-18-2020```
+Run ```npm run distro 100000 01-01-2020 06-18-2020```
 
-The ```--``` indicates the start of paramters to the distro. The distro expects amount, start date, and then end date.
+The distro expects amount, start date, and then end date.
 
 While testing, there is a command to help with testing
 
