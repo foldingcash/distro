@@ -1,18 +1,11 @@
 const slpsdk = require('slp-sdk');
 const fs = require('fs');
-
 const sleep = require('./common/sleep');
 const log = require('./common/logger');
 const { fundingAddress, bchChangeReceiverAddress, fundingWif, tokenId } = require('./configuration/wallet');
+const { batchCount, sendTokensRetryWaitSeconds, sendTokensRetryCount, failedFoldersFileName } = require('./configuration/distro');
 
 const slp = new slpsdk();
-
-// Sending SLP configuration
-const batchCount = 18;
-const sendTokensRetryWaitSeconds = 30;
-const sendTokensRetryCount = 3;
-
-const failedFoldersFileName = './FailedFolders.json';
 
 exports.sendDistro = (async function (distro) {
     try {
