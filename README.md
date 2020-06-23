@@ -23,7 +23,7 @@ which should be used to simply send a static amount and start/end date.
 
 ### Additional Running Notes
 
-* The distro API does not have it's timeouts configured long enough and will oftem timeout and disconnect...give it about 5 mins and try again...do this up to three times or check the logs to ensure it is a timeout/disconnect response. The distro API will enventually finish downloading the source files and cache the results which will allow this call to eventually work.
+* The distro API does not have it's timeouts configured long enough and will often timeout and disconnect...give it about 5 mins and try again...do this up to three times or check the logs to ensure it is a timeout/disconnect response. The distro API will enventually finish downloading the source files and cache the results which will allow this call to eventually work.
 
 * The latest published ```slp-sdk``` has a bug that this code requires.
 To run, one will need to clone, build, and link the ```slp-sdk``` package.
