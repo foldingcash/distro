@@ -7,6 +7,8 @@ Folders being users of the Folding@Home network that have correctly configured t
 
 Clone this repo, open a command line in the created directory
 
+Update configuration/wallet with your wallet and token information
+
 Run ```npm i```
 
 Run ```npm run distro -- 100000 01-01-2020 06-18-2020```

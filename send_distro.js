@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const sleep = require('./common/sleep');
 const log = require('./common/logger');
-const { fundingAddress, bchChangeReceiverAddress, fundingWif, tokenId } = require('./configuration/configuration');
+const { fundingAddress, bchChangeReceiverAddress, fundingWif, tokenId } = require('./configuration/wallet');
 
 const slp = new slpsdk();
 

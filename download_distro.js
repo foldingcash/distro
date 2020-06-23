@@ -1,6 +1,6 @@
 const superagent = require('superagent');
 const log = require('./common/logger');
-const { timeoutHours, distroUrl } = require('./configuration/configuration');
+const { timeoutHours, distroUrl } = require('./configuration/distro');
 
 exports.downloadDistro = (async function (amount, startDate, endDate) {
     let response = null;

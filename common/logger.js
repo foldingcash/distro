@@ -1,8 +1,8 @@
 const { createLogger, format: { simple, combine, timestamp }, transports } = require('winston');
-const configuration = require('../configuration/configuration');
+const { loggingLevel } = require('../configuration/logging');
 
 module.exports = createLogger({
-    level: configuration.loggingLevel,
+    level: loggingLevel,
     format: combine(timestamp(), simple()),
     transports: [
         new transports.Console()
