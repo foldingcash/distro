@@ -5,6 +5,7 @@ const { timeoutHours, distroUrl } = require('./configuration/distro');
 exports.downloadDistro = (async function (amount, startDate, endDate) {
     let response = null;
 
+    // TODO: Attempt downloading the distro multiple times
     try {
         const requestUrl = distroUrl + '?amount=' + amount + '&startDate=' + startDate + '&endDate=' + endDate;
 
