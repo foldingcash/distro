@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "description": "Tools to help with foldingcash project",
   "dependencies": {
-    "slp-sdk": "file:../../slp-sdk",
-    "package.json": "^2.0.1",
     "https": "^1.0.0",
+    "pkg.json": "^2.0.7",
+    "slp-sdk": "file:../../slp-sdk",
     "superagent": "^5.2.2",
     "winston": "^3.2.1"
   },
