@@ -24,6 +24,6 @@ const sender = require('./send_distro');
         await sender.sendDistro(downloadResponse.distro);
         log.info('downloading and sending distro finished');
     } catch (error) {
-        log.error(error);
+        log.error(typeof(error) === 'object' ? JSON.stringify(error) : error);
     }
 })();

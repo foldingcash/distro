@@ -1,11 +1,17 @@
 const superagent = require('superagent');
 const log = require('./common/logger');
-const { timeoutHours, distroUrl } = require('./configuration/distro');
+const { timeoutHours, distroUrl, downloadRetryCount, downloadRetryWaitSeconds } = require('./configuration/distro');
 
 exports.downloadDistro = (async function (amount, startDate, endDate) {
+    log.info('starting download distro');
+    const distro = downloadDistroWithRetry(amount, startDate, endDate, downloadRetryCount);
+    log.info('finished download distro');
+    return distro;
+});
+
+async function downloadDistroWithRetry(amount, startDate, endDate, retryAttempts) {
     let response = null;
 
-    // TODO: Attempt downloading the distro multiple times
     try {
         const requestUrl = distroUrl + '?amount=' + amount + '&startDate=' + startDate + '&endDate=' + endDate;
 
@@ -24,7 +30,17 @@ exports.downloadDistro = (async function (amount, startDate, endDate) {
         log.info('finished downloading distro');
         return { distro: responseObject.distro };
     } catch (error) {
-        log.error(error);
+        log.error(typeof (error) === 'object' ? JSON.stringify(error) : error);
         log.error('response received ' + JSON.stringify(response));
+        if (retryAttempts > 0) {
+            const retryAttemptsLeft = --retryAttempts;
+            log.warn('retrying with ' + retryAttemptsLeft + ' left');
+            await sleep(downloadRetryWaitSeconds * 1000);
+            return await downloadDistroWithRetry(amount, startDate, endDate, retryAttemptsLeft);
+        }
+        else {
+            log.error('the download failed with multiple attempts');
+            throw error;
+        }
     }
-});
+}
