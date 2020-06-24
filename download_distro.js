@@ -1,5 +1,6 @@
 const superagent = require('superagent');
 const log = require('./common/logger');
+const sleep = require('./common/sleep');
 const { timeoutHours, distroUrl, downloadRetryCount, downloadRetryWaitSeconds } = require('./configuration/distro');
 
 exports.downloadDistro = (async function (amount, startDate, endDate) {
@@ -35,7 +36,9 @@ async function downloadDistroWithRetry(amount, startDate, endDate, retryAttempts
         if (retryAttempts > 0) {
             const retryAttemptsLeft = --retryAttempts;
             log.warn('retrying with ' + retryAttemptsLeft + ' left');
+            log.verbose('sleeping');
             await sleep(downloadRetryWaitSeconds * 1000);
+            log.verbose('finished sleeping');
             return await downloadDistroWithRetry(amount, startDate, endDate, retryAttemptsLeft);
         }
         else {
