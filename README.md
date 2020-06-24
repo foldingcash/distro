@@ -17,7 +17,7 @@ The distro expects amount, start date, and then end date.
 
 While testing, there is a command to help with testing
 
-```npm run distro test```
+```npm run distro:test```
 
 which should be used to simply send a static amount and start/end date.
 
