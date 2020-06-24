@@ -4,7 +4,7 @@ const { timeoutHours, distroUrl, downloadRetryCount, downloadRetryWaitSeconds } 
 
 exports.downloadDistro = (async function (amount, startDate, endDate) {
     log.info('starting download distro');
-    const distro = downloadDistroWithRetry(amount, startDate, endDate, downloadRetryCount);
+    const distro = await downloadDistroWithRetry(amount, startDate, endDate, downloadRetryCount);
     log.info('finished download distro');
     return distro;
 });
