@@ -36,7 +36,9 @@ async function handleDistro(distro) {
 
     for (let index = 0; index < chunkedFolders.length; index++) {
         const currentChunkFolders = chunkedFolders[index];
+        log.verbose('sending chunk' + (index + 1))
         await handleBulkDistro(currentChunkFolders, failedFolders, transactionIds);
+        log.debug('chunk sent, remaining chunks ' + (chunkedFolders.length - (index + 1)));
     }
 
     if (transactionIds.length > 0) {
