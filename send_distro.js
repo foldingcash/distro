@@ -3,7 +3,7 @@ const fs = require('fs');
 const sleep = require('./common/sleep');
 const log = require('./common/logger');
 const { fundingAddress, bchChangeReceiverAddress, fundingWif, tokenId } = require('./configuration/wallet');
-const { batchCount, sendTokensRetryWaitSeconds, sendTokensRetryCount, failedFoldersFileName } = require('./configuration/distro');
+const { batchCount, sendTokensRetryWaitSeconds, sendTokensRetryCount, failedFoldersFileName, transactionIdsFileName } = require('./configuration/distro');
 
 const slp = new slpsdk();
 
@@ -32,10 +32,19 @@ async function handleDistro(distro) {
     log.verbose('total chunks ' + chunkedFolders.length);
 
     const failedFolders = [];
+    const transactionIds = [];
 
     for (let index = 0; index < chunkedFolders.length; index++) {
         const currentChunkFolders = chunkedFolders[index];
-        await handleBulkDistro(currentChunkFolders, failedFolders);
+        await handleBulkDistro(currentChunkFolders, failedFolders, transactionIds);
+    }
+
+    if (transactionIds.length > 0) {
+        log.debug('transaction Ids ' + JSON.stringify(transactionIds));
+        log.info('at least one transaction was sent');
+        log.verbose('writing transaction Ids to file');
+        fs.writeFileSync(transactionIdsFileName, JSON.stringify({ transactionIds: transactionIds }));
+        log.verbose('finished writing transaction Ids to file');
     }
 
     if (failedFolders.length > 0) {
@@ -50,11 +59,11 @@ async function handleDistro(distro) {
     log.info('finished sending distro');
 }
 
-async function handleBulkDistro(folders, failedFolders) {
-    await handleBulkDistroWithRetry(folders, sendTokensRetryCount, failedFolders);
+async function handleBulkDistro(folders, failedFolders, transactionIds) {
+    await handleBulkDistroWithRetry(folders, sendTokensRetryCount, failedFolders, transactionIds);
 }
 
-async function handleBulkDistroWithRetry(folders, retryAttempts, failedFolders) {
+async function handleBulkDistroWithRetry(folders, retryAttempts, failedFolders, transactionIds) {
     try {
         const slpAddresses = folders.map(folder => slp.Address.toSLPAddress(folder.bitcoinAddress));
         const amounts = folders.map(folder => folder.amount);
@@ -74,15 +83,18 @@ async function handleBulkDistroWithRetry(folders, retryAttempts, failedFolders) 
         const send = await slp.TokenType1.send(config);
 
         log.verbose('txId ' + send);
+        transactionIds.push(send);
     }
     catch (error) {
+        log.error('an error was caught: ' + error)
         log.error(typeof(error) === 'object' ? JSON.stringify(error) : error);
         if (retryAttempts > 0) {
             const retryAttemptsLeft = --retryAttempts;
             log.warn('retrying with ' + retryAttemptsLeft + ' left');
             await sleep(sendTokensRetryWaitSeconds * 1000);
-            await handleBulkDistroWithRetry(folders, retryAttemptsLeft);
+            await handleBulkDistroWithRetry(folders, retryAttemptsLeft, failedFolders, transactionIds);
         } else {
+            log.warn('attempts finished, adding folders to failed folder list')
             folders.forEach(folder => {
                 failedFolders.push(folder);
             });
