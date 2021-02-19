@@ -27,3 +27,10 @@ which should be used to simply send a static amount and start/end date.
 
 * The latest published ```slp-sdk```, 4.15.0, has a bug in a feature this code requires.
 For now, to run with the bug fix, one will need to clone, build, and link the ```slp-sdk``` package.
+
+**TODO**
+
+* Make this easier to use without having to rely on having the ```slp-sdk``` locally already
+    * Can reference a repo and branch directly
+    * https://stackoverflow.com/questions/23210437/npm-install-private-github-repositories-by-dependency-in-package-json
+    * Could fork the slp-sdk and add a label and publish to npm
