@@ -1,19 +1,25 @@
-const slpsdk = require('slp-sdk');
-const fs = require('fs');
-const sleep = require('./common/sleep');
+const datacash = require('@foldingcash/datacash');
+
 const log = require('./common/logger');
-const { fundingAddress, bchChangeReceiverAddress, fundingWif, tokenId } = require('./configuration/wallet');
-const { batchCount, sendTokensRetryWaitSeconds, sendTokensRetryCount, failedFoldersFileName, transactionIdsFileName } = require('./configuration/distro');
+const { fundingWif } = require('./configuration/wallet');
 
-const slp = new slpsdk();
+const basicMemo = "0x6d02";
+const topicMemo = "0x6d0c";
 
-exports.sendMemo = (async function (memo) {
+(function () {
     try {
-        log.info('starting send distro');
-        log.debug('received ' + JSON.stringify(memo));
+        log.info('starting send memo');
+        //data: [topicMemo, "HelloWorld", "hello world via script"],
+        const tx = {
+            data: [basicMemo, "This is a test..."],
+            cash: {
+                key: fundingWif,
+            },
+        };
+        datacash.send(tx, function(err) {
+            err && log(err);
+        });
+    } catch (error) {
+        log.error(typeof(error) === 'object' ? JSON.stringify(error) : error);
     }
-    catch (error) {
-        log.error(error);
-        log.debug('received ' + memo);
-    }
-});
+})();
