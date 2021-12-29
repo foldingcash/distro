@@ -10,8 +10,9 @@ const topicMemo = "0x6d0c";
     try {
         log.info('starting send memo');
         //data: [topicMemo, "HelloWorld", "hello world via script"],
+        //data: [basicMemo, "This is a test..."],
         const tx = {
-            data: [basicMemo, "This is a test..."],
+            data: [topicMemo, "HelloWorld", "hello world via script"],
             cash: {
                 key: fundingWif,
             },
