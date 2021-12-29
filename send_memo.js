@@ -1,4 +1,4 @@
-const datacash = require('@foldingcash/datacash');
+const datacash = require('datacash');
 
 const log = require('./common/logger');
 const { fundingWif } = require('./configuration/wallet');
