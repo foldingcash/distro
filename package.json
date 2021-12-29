@@ -1,12 +1,14 @@
 {
-  "name": "foldingcash.distro",
+  "name": "@foldingcash/distro",
   "version": "0.1.0",
   "description": "Tools to help with the foldingcash project",
   "dependencies": {
-    "datacash": "git+https://github.com/foldingcash/datacash.git#v0.1.0-rc5",
+    "@foldingcash/datacash": "github:foldingcash/datacash#v0.1.0-rc8",
+    "@foldingcash/slp-sdk": "github:foldingcash/slp-sdk#v4.15.1-rc2",
+    "datacash": "github:foldingcash/datacash#v0.1.0-rc8",
     "https": "^1.0.0",
     "pkg.json": "^2.0.7",
-    "slp-sdk": "git+https://github.com/foldingcash/slp-sdk.git#v4.15.1-rc1",
+    "slp-sdk": "github:foldingcash/slp-sdk#v4.15.1-rc2",
     "superagent": "^5.2.2",
     "winston": "^3.2.1"
   },

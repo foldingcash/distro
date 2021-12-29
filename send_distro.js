@@ -1,4 +1,4 @@
-const slpsdk = require('slp-sdk');
+const slpsdk = require('@foldingcash/slp-sdk');
 const fs = require('fs');
 const sleep = require('./common/sleep');
 const log = require('./common/logger');

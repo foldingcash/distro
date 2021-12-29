@@ -21,16 +21,10 @@ While testing, there is a command to help with testing
 
 which should be used to simply send a static amount and start/end date.
 
-### Additional Running Notes
+## Updating @foldingcash Dependencies
 
-* The distro API does not have it's timeouts configured long enough and will often timeout and disconnect...give it about 5 mins and try again...do this up to three times or check the logs to ensure it is a timeout/disconnect response. The distro API will enventually finish downloading the source files and cache the results which will allow this call to eventually work. ***Retry logic has been added which will only mask the underlying problem***
+The @foldingcash/slp-sdk dependency may not actually update to version by editing package.json; instead use npm to install a specific version
 
-* The latest published ```slp-sdk```, 4.15.0, has a bug in a feature this code requires.
-For now, to run with the bug fix, one will need to clone, build, and link the ```slp-sdk``` package.
-
-**TODO**
-
-* Make this easier to use without having to rely on having the ```slp-sdk``` locally already
-    * Can reference a repo and branch directly
-    * https://stackoverflow.com/questions/23210437/npm-install-private-github-repositories-by-dependency-in-package-json
-    * Could fork the slp-sdk and add a label and publish to npm
+```
+npm i datacash@git+https://github.com/foldingcash/datacash.git#v0.1.0-rc1
+```
